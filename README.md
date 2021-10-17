@@ -8,9 +8,6 @@
 
 - [x] Provide a simple CRUD
 - [x] Deploy to Heroku
-
-# Techs used in
-
-- [x] NestJS (Typescript)
-- [x] MongoDB (Non-relational database)
-- [ ] Docker (for local development)
+- [x] Use NestJS (Typescript)
+- [x] Use MongoDB
+- [ ] Use Docker (for local development)
