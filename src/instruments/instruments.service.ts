@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateInstrumentDto } from './dto/create-instrument.dto';
 import { UpdateInstrumentDto } from './dto/update-instrument.dto';
+import { Instrument, InstrumentDocument } from './entities/instrument.entity';
 
 @Injectable()
 export class InstrumentsService {
+  constructor(
+    @InjectModel(Instrument.name)
+    private instrumentModel: Model<InstrumentDocument>,
+  ) {}
+
   create(createInstrumentDto: CreateInstrumentDto) {
-    return 'This action adds a new instrument';
+    const instrument = new this.instrumentModel(createInstrumentDto);
+    instrument.save();
+
+    return instrument.id;
   }
 
   findAll() {
-    return `This action returns all instruments`;
+    return this.instrumentModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} instrument`;
+  findOne(id: string) {
+    return this.instrumentModel.findById(id);
   }
 
-  update(id: number, updateInstrumentDto: UpdateInstrumentDto) {
-    return `This action updates a #${id} instrument`;
+  update(id: string, updateInstrumentDto: UpdateInstrumentDto) {
+    return this.instrumentModel.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        $set: updateInstrumentDto,
+      },
+      {
+        new: true,
+      },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} instrument`;
+  remove(id: string) {
+    return this.instrumentModel
+      .deleteOne({
+        _id: id,
+      })
+      .exec();
   }
 }
