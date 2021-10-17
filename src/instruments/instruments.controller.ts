@@ -27,7 +27,7 @@ export class InstrumentsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.instrumentsService.findOne(+id);
+    return this.instrumentsService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class InstrumentsController {
     @Param('id') id: string,
     @Body() updateInstrumentDto: UpdateInstrumentDto,
   ) {
-    return this.instrumentsService.update(+id, updateInstrumentDto);
+    return this.instrumentsService.update(id, updateInstrumentDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.instrumentsService.remove(+id);
+    return this.instrumentsService.remove(id);
   }
 }
